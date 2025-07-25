@@ -98,14 +98,13 @@ export default function SessionPage() {
             )}
           </div>
             
-          <div className="w-full bg-gray-900 rounded p-4 min-h-[80px] border border-gray-700 max-h-48 overflow-y-auto flex items-center justify-center gap-2">
-            
+          <div className="w-full bg-gray-900 rounded p-4 min-h-[80px] border border-gray-700 max-h-64 overflow-auto flex items-start justify-center gap-2">
             {loading ? (
               <span className="text-gray-500">Updating clipboard in this session...</span>
             ) : (
-              <p className="font-roboto text-white break-words text-lg text-center flex-1" style={{ whiteSpace: 'pre-line' }}>
+              <pre className="font-roboto text-white break-words text-lg text-left flex-1 whitespace-pre-wrap m-0" style={{ width: '100%' }}>
                 {received || <span className="text-gray-500">Nothing pasted here yet.</span>}
-              </p>
+              </pre>
             )}
           </div>
         </div>
@@ -124,9 +123,9 @@ export default function SessionPage() {
               e.target.style.height = e.target.scrollHeight + 'px';
             }}
             placeholder="Paste something here..."
-            className="w-full border p-2 rounded font-roboto bg-gray-900 text-white border-gray-700 placeholder-gray-500 resize-none overflow-hidden min-h-[40px]"
+            className="w-full border p-2 rounded font-roboto bg-gray-900 text-white border-gray-700 placeholder-gray-500 resize-y overflow-auto min-h-[40px] max-h-64"
             rows={1}
-            style={{ minHeight: '40px', maxHeight: '300px' }}
+            style={{ minHeight: '40px', maxHeight: '256px' }}
           />
           <button
             onClick={sendClipboard}
