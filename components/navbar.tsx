@@ -13,7 +13,7 @@ export default function Navbar() {
       </div>
       <div>
         <a
-          href="https://github.com/your-username/clipsync" // TODO: Replace with actual repo URL
+          href="https://github.com/johannus22/clipsync" // TODO: Replace with actual repo URL
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-4 py-2 rounded bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-colors text-base font-medium shadow-sm backdrop-blur"
