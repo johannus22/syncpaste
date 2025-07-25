@@ -43,7 +43,7 @@ export default function HomePage() {
 
   return (
     <main className="min-h-[calc(100vh-72px)] flex flex-col items-center justify-center space-y-6 px-4 text-center bg-gray-900">
-      <h1 className="text-5xl font-bold text-white bg-gray-800 p-3 rounded shadow-gray-950">Welcome to ClipSync</h1>
+      <h1 className="text-5xl font-bold text-white bg-gray-800 p-3 rounded shadow-gray-950">Welcome to SyncPaste</h1>
       <p className="text-gray-500">
         Copy and paste across devices, fast and instantly ✨</p>
 

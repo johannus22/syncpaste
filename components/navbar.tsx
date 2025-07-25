@@ -7,13 +7,13 @@ export default function Navbar() {
         <Link href="/">
           <span className="flex items-center gap-3 select-none">
             <img src="/logo.png" alt="ClipSync Logo" className="h-10 w-10" />
-            <span className="font-bold text-2xl text-white tracking-tight">ClipSync</span>
+            <span className="font-bold text-2xl text-white tracking-tight">SyncPaste</span>
           </span>
         </Link>
       </div>
       <div>
         <a
-          href="https://github.com/johannus22/clipsync" // TODO: Replace with actual repo URL
+          href="https://github.com/johannus22/syncpaste"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-4 py-2 rounded bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-colors text-base font-medium shadow-sm backdrop-blur"

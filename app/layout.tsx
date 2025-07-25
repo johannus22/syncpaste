@@ -11,7 +11,7 @@ const tiny5 = Tiny5({
 });
 
 export const metadata = {
-  title: 'ClipSync',
+  title: 'SyncPaste',
   description: 'Cross-device clipboard sync tool',
 };
 
