@@ -13,6 +13,9 @@ const tiny5 = Tiny5({
 export const metadata = {
   title: 'SyncPaste',
   description: 'Cross-device clipboard sync tool',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
