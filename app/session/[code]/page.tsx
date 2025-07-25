@@ -97,8 +97,9 @@ export default function SessionPage() {
               </button>
             )}
           </div>
-
+            
           <div className="w-full bg-gray-900 rounded p-4 min-h-[80px] border border-gray-700 max-h-48 overflow-y-auto flex items-center justify-center gap-2">
+            
             {loading ? (
               <span className="text-gray-500">Updating clipboard in this session...</span>
             ) : (
@@ -114,6 +115,7 @@ export default function SessionPage() {
       </div>
 {/* Clipboard input */}
         <div className="space-y-2 bg-gray-800 rounded-lg p-4 shadow">
+        <span className='text-red-500'>Note: Never paste your password or sensitive info here</span>
           <textarea
             value={clipboard}
             onChange={e => {
