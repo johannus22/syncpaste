@@ -1,3 +1,3 @@
-# clipsync
+# SyncPaste
 
-ClipSync is a lightweight tool to copy and paste across devices.
+SyncPaste is a lightweight tool to copy and paste across devices.
