@@ -7,13 +7,14 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Missing code' }, { status: 400 });
   }
 
+  /*  TODO: Di pa gumagana 'tong code block na toooo
   const autoDelete = new Date(Date.now() - 30 * 60 * 1000).toISOString();
 
   await supabase
     .from('clipboards')
     .delete()
     .lt('created_at', autoDelete);
-
+  */ 
   const { data, error } = await supabase
     .from('clipboards')
     .select('content')
