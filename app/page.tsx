@@ -9,6 +9,7 @@ const generateCode = customAlphabet('0123456789', 4); // 4-digit numeric code la
 export default function HomePage() {
   const router = useRouter();
   const [joinCode, setJoinCode] = useState('');
+  const [joinLoading, setJoinLoading] = useState(false);
   const [pasteCount, setPasteCount] = useState<number | null>(null);
   const [pasteCountLoading, setPasteCountLoading] = useState(true);
 
@@ -17,11 +18,20 @@ export default function HomePage() {
     router.push(`/session/${code}`);
   };
 
-  const handleJoin = () => {
-    if (/^\d{4}$/.test(joinCode)) {
-      router.push(`/session/${joinCode}`);
-    } else {
+  const handleJoin = async () => {
+    if (!/^\d{4}$/.test(joinCode)) {
       alert('Please enter a valid 4-digit code.');
+      return;
+    }
+
+    setJoinLoading(true);
+    
+    try {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      router.push(`/session/${joinCode}`);
+    } catch (error) {
+      console.error('Error joining session:', error);
+      setJoinLoading(false);
     }
   };
 
@@ -45,7 +55,7 @@ export default function HomePage() {
     <main className="min-h-[calc(100vh-72px)] flex flex-col items-center justify-center space-y-6 px-4 text-center bg-gray-900">
       <h1 className="text-5xl font-bold text-white bg-gray-800 p-3 rounded shadow-gray-950">Welcome to SyncPaste</h1>
       <p className="text-gray-500">
-        Copy and paste across devices, fast and instantly ✨</p>
+        Copy and paste across devices, lightning fast and instantly ✨</p>
 
       <button
         onClick={handleCreate}
@@ -65,9 +75,21 @@ export default function HomePage() {
         />
         <button
           onClick={handleJoin}
-          className="bg-green-800 hover:bg-green-700 text-white hover:text-shadow-sm duration-100 transition-colors px-4 py-2 rounded"
+          disabled={joinLoading || !joinCode.trim()}
+          className={`px-4 py-2 rounded transition-colors duration-100 flex items-center gap-2 ${
+            joinLoading || !joinCode.trim()
+              ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+              : 'bg-green-800 hover:bg-green-700 text-white hover:text-shadow-sm'
+          }`}
         >
-          Join
+          {joinLoading ? (
+            <>
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              Joining...
+            </>
+          ) : (
+            'Join'
+          )}
         </button>
       </div>
       {pasteCountLoading ? (
