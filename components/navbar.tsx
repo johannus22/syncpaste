@@ -1,6 +1,13 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Home } from 'lucide-react';
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const isInSession = pathname?.startsWith('/session/');
+
   return (
     <nav className="w-full flex items-center justify-between px-6 py-4 bg-gray-900 border-b border-neutral-800 sticky top-0 z-20">
       <div className="flex items-center gap-3">
@@ -11,7 +18,16 @@ export default function Navbar() {
           </span>
         </Link>
       </div>
-      <div>
+      <div className="flex items-center gap-3">
+        {isInSession && (
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white border border-blue-500 transition-colors text-base font-medium shadow-sm"
+          >
+            <Home size={18} />
+            <span className="hidden sm:inline">Home</span>
+          </Link>
+        )}
         <a
           href="https://github.com/johannus22/syncpaste"
           target="_blank"

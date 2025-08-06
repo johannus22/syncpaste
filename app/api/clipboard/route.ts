@@ -58,3 +58,22 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ success: true });
 }
 
+export async function DELETE(req: NextRequest) {
+  const code = req.nextUrl.searchParams.get('code');
+  if (!code) {
+    return NextResponse.json({ error: 'Missing code' }, { status: 400 });
+  }
+
+  const { error } = await supabase
+    .from('clipboards')
+    .delete()
+    .eq('session_code', code);
+
+  if (error) {
+    console.error('Supabase error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json({ success: true });
+}
+
