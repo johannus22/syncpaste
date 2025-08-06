@@ -12,7 +12,16 @@ const tiny5 = Tiny5({
 
 export const metadata = {
   title: 'SyncPaste',
-  description: 'Cross-device clipboard sync tool',
+  description: 'A minimal, fast clipboard sharing tool using session codes. Paste once, access anywhere.',
+  keywords: 'clipboard sharing, sync clipboard, paste tool, real-time clipboard, no login, cross-platform copy paste tool, clipboard manager online, open source app',
+  openGraph: {
+    title: 'SyncPaste',
+    description: 'Instantly sync your clipboard across devices with a session code.',
+    url: 'https://syncpaste.vercel.app.com',
+    siteName: 'SyncPaste'
+  },
+  type: 'website',
+  
   icons: {
     icon: '/favicon.ico',
   },
