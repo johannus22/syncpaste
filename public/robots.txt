@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://syncpaste.vercel.app
+
+# Sitemaps
+Sitemap: https://syncpaste.vercel.app/sitemap.xml
