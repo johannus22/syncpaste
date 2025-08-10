@@ -7,13 +7,6 @@ const supabase = createClient(
 );
 
 export async function POST(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const secret = searchParams.get('secret');
-
-  if (secret !== process.env.CRON_SECRET_KEY) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
   const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
 
   const { error } = await supabase
