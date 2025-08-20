@@ -1,5 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
+import { pusherServer } from '@/lib/pusher-server';
+
+const serverSupabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get('code');
@@ -47,13 +54,9 @@ export async function POST(req: NextRequest) {
     console.error('Supabase error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-  // Update clipboard pasteeeee
-  await supabase
-  .from('clipboards')
-  .upsert({ session_code: sessionCode, content: text });
 
+  // Increment paste counter
   await supabase.rpc('increment_paste_counter');
-
 
   return NextResponse.json({ success: true });
 }
@@ -64,14 +67,20 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: 'Missing code' }, { status: 400 });
   }
 
-  const { error } = await supabase
+  const { error: deleteError } = await serverSupabase
     .from('clipboards')
     .delete()
     .eq('session_code', code);
 
-  if (error) {
-    console.error('Supabase error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  if (deleteError) {
+    console.error('Supabase delete error:', deleteError);
+    return NextResponse.json({ error: deleteError.message }, { status: 500 });
+  }
+
+  try {
+    await pusherServer.trigger(`session-${code}`, 'clipboard-update', { text: '' });
+  } catch (pusherError) {
+    console.error('Pusher notify error (delete):', pusherError);
   }
 
   return NextResponse.json({ success: true });

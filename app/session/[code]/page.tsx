@@ -83,12 +83,18 @@ export default function SessionPage() {
 
       if (response.ok) {
         setReceived('');
+        // Also clear any paste errors
+        setPasteError('');
       } else {
         const errorData = await response.json().catch(() => ({}));
-        console.error('Delete failed:', errorData.message || 'Failed to delete clipboard');
+        const errorMessage = errorData.message || errorData.error || 'Failed to delete clipboard';
+        console.error('Delete failed:', errorMessage);
+        // Show error to user
+        setPasteError(`Delete failed: ${errorMessage}`);
       }
     } catch (error) {
       console.error('Network error during delete:', error);
+      setPasteError('Network error during delete. Please try again.');
     } finally {
       setDeleteLoading(false);
     }
