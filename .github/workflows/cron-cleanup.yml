@@ -1,0 +1,46 @@
+name: Cleanup Old Clipboards
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  call-cron-endpoint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger production /api/cron endpoint
+        env:
+          CRON_URL: ${{ secrets.CRON_ENDPOINT_URL }}
+          CRON_BEARER: ${{ secrets.CRON_BEARER }} # optional, if you later secure the route with Authorization: Bearer
+        run: |
+          if [ -z "$CRON_URL" ]; then
+            echo "Missing secrets.CRON_ENDPOINT_URL. Set it to your production URL, e.g. https://your-domain.vercel.app/api/cron"
+            exit 1
+          fi
+
+          echo "Calling $CRON_URL"
+          if [ -n "$CRON_BEARER" ]; then
+            echo "Using Authorization header"
+            AUTH=( -H "Authorization: Bearer $CRON_BEARER" )
+          else
+            AUTH=()
+          fi
+
+          for i in {1..3}; do
+            STATUS=$(curl -sS -o /tmp/resp.txt -w "%{http_code}" -X POST "${CRON_URL}" "${AUTH[@]}")
+            echo "HTTP $STATUS"
+            echo "Response:"
+            cat /tmp/resp.txt || true
+
+            if [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 300 ]; then
+              echo "Cron call succeeded"
+              exit 0
+            fi
+
+            echo "Attempt $i failed; retrying in 10s..."
+            sleep 10
+          done
+
+          echo "Failed to call cron endpoint after 3 attempts"
+          exit 1
