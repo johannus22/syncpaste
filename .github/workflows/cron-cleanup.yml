@@ -12,10 +12,10 @@ jobs:
       - name: Trigger production /api/cron endpoint
         env:
           CRON_URL: ${{ secrets.CRON_ENDPOINT_URL }}
-          CRON_BEARER: ${{ secrets.CRON_BEARER }} # optional, if you later secure the route with Authorization: Bearer
+          CRON_BEARER: ${{ secrets.CRON_BEARER }}
         run: |
           if [ -z "$CRON_URL" ]; then
-            echo "Missing secrets.CRON_ENDPOINT_URL. Set it to your production URL, e.g. https://your-domain.vercel.app/api/cron"
+            echo "Missing secrets.CRON_ENDPOINT_URL."
             exit 1
           fi
 
