@@ -1,8 +1,8 @@
-// app/layout.tsx
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { GlobalStates } from "./context/GlobalContext";
 
 const poppins = Poppins({
   weight: "400",
@@ -20,7 +20,7 @@ export const metadata = {
     title: "SyncPaste",
     description:
       "Instantly sync your clipboard across devices with a session code.",
-    url: "https://syncpaste.vercel.app.com",
+    url: "https://syncpaste.vercel.app",
     siteName: "SyncPaste",
   },
   type: "website",
@@ -39,7 +39,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.className} bg-gray-900`}>
         <Navbar />
-        {children}
+          <GlobalStates>
+            {children}
+          </GlobalStates>
         <Footer />
       </body>
     </html>
