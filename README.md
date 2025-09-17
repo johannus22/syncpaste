@@ -4,6 +4,7 @@
 
 Built with Next.js, Supabase, and Pusher, it enables LIVE syncing of clipboard data between users in a shared session.
 
+( I vibe coded this readme HAHAHAHA and the .yml )
 ---
 
 ## 🚀 Features
